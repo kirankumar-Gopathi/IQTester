@@ -129,3 +129,18 @@ a:hover { color: #036; }
   height:30px;
   clear:both;
 }
+
+#timer{
+  font-size: 2em;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  display: none;
+}
+
+button#startTestBtn{
+  display: block;
+  margin: 15% auto;
+  font-size: 2em;
+}
+
