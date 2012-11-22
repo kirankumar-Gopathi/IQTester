@@ -90,9 +90,12 @@ a:hover { color: #036; }
 
 /* IQ Tester Styles */
 
+body{
+  background: url("../images/quiz-app_bg_A.jpg") repeat scroll 0 0 transparent;
+}
+
 .page{
   width:100%;
-  background:#fff;
 }
 
 #header{
@@ -103,7 +106,10 @@ a:hover { color: #036; }
 }
 
 #logo{
-  padding: 10px 0 0 30px;
+  background: url("../images/quiz-logo_A.png") no-repeat scroll 0 0 transparent;
+  width: 402px;
+  height: 102px;
+  margin: 5% auto;
 }
 
 .title{
