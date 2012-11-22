@@ -5,6 +5,7 @@ App.QuizController = Ember.ArrayProxy.create({
   content: [],
   score: 0,
   time: null,
+  timeLeft: null,
   randomized: false
 });
 
@@ -39,14 +40,15 @@ App.QuizController = Ember.ArrayProxy.create({
    var initializeTimer = function () {
      if(App.QuizController.timer){
 	   var quizTimer =  App.QuizController.timer;
-	   $("div#timer").show().children("span").html(quizTimer);
+	   $("div#timer").show();
+	   App.QuizController.set('timeLeft', quizTimer);
        var updateTimer = window.setInterval(function () {
 	      if(quizTimer > 0){
- 		       $("div#timer span").html(--quizTimer);
+			   App.QuizController.set('timeLeft', --quizTimer);
             }  
 		  else{
                clearInterval(updateTimer);
-			    $("div#timer").html("Time Up!");
+				App.QuizController.set('timeLeft', "TimeUp!");
 			}
 	  }, 1000);
      }
