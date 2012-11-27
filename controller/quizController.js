@@ -40,18 +40,40 @@ App.QuizController = Ember.ArrayProxy.create({
    var initializeTimer = function () {
      if(App.QuizController.timer){
 	   var quizTimer =  App.QuizController.timer;
+	   var stepValue = 360/quizTimer;
+	   var endAngle = 0;
 	   $("div#timer").show();
 	   App.QuizController.set('timeLeft', quizTimer);
        var updateTimer = window.setInterval(function () {
 	      if(quizTimer > 0){
+		       endAngle += stepValue;
 			   App.QuizController.set('timeLeft', --quizTimer);
+			   drawTimer(endAngle);
             }  
 		  else{
                clearInterval(updateTimer);
 				App.QuizController.set('timeLeft', "TimeUp!");
+				drawTimer(endAngle);
 			}
 	  }, 1000);
      }
 	}
+	
+	var canvas = document.getElementById('clockAnimation');
+    var drawTimer = function (endAngle) {
+	  if (canvas.getContext){
+      var ctx = canvas.getContext('2d');
+	  ctx.clearRect(0, 0, 104, 114);
+	  ctx.beginPath();
+	  ctx.fillStyle = '#00DEFF';
+	  ctx.lineWidth = 6;
+	  ctx.moveTo(51, 61);
+	  ctx.arc(51 ,62 ,40 ,1.5*Math.PI ,(endAngle+270) * (Math.PI/180) ,false); 
+	  ctx.lineTo(51, 61);
+      ctx.fill();
+	  ctx.strokeStyle = 'white';
+	  ctx.stroke();
+     }
+	};
 	
 })();

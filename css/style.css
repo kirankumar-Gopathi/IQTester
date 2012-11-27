@@ -150,3 +150,9 @@ button#startTestBtn{
   font-size: 2em;
 }
 
+div#timerDisplay{
+  background: url("../images/timer_start_modified.png") no-repeat scroll 0 0 transparent;
+  width: 104px;
+  height: 114px;
+  margin: 0 auto;
+}
