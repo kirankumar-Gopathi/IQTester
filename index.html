@@ -20,12 +20,27 @@
 </div>
 <div id="logo"></div>
 <div id="main-container">
+  <script type="text/x-handlebars" data-template-name="question-view">
+  {{#if view.content.isFillIn}}
+    <div><img {{bindAttr src="view.content.imageURL"}} alt="Logo"></div>
+    <div class="question">{{view.content.question}}</div>
+    {{view App.FieldView contentBinding="view.content"}}
+  {{else}}
+     <span class="question">{{view.content.question}}</span>
+     {{#collection contentBinding="view.content.options" class="options-container"}}
+       {{view App.RadioView contentBinding="view.content"}}
+     {{/collection}}
+  {{/if}}
+  </script>
   <script type="text/x-handlebars">
-   {{#view class="quiz-container"}}
-        {{#collection contentBinding="App.QuizController" tagName="ul"}}
-          {{view.content.question}}
-        {{/collection}}
-   {{/view}}
+    {{#view id="quiz-container"}}
+        {{view App.QuizView}}
+       <div>
+         {{view App.QuitButton}}
+         {{view App.NextButton}}
+         {{view App.PassButton}}
+       </div>
+    {{/view}}
    <div id="timer">Time Left : <span>{{App.QuizController.timeLeft}}</span></div>
    </script>
    <button id="startTestBtn">Begin Test</button>
@@ -42,5 +57,11 @@
   <script src="js/app.js"></script>
   <script src="model/Question.js"></script>
   <script src="controller/quizController.js"></script>
+  <script src="view/QuizView.js"></script>
+  <script src="view/FiledView.js"></script>
+  <script src="view/RadioView.js"></script>
+  <script src="view/PassButton.js"></script>
+  <script src="view/NextButton.js"></script>
+  <script src="view/QuitButton.js"></script>
 </body>
 </html>

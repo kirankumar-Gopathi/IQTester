@@ -156,3 +156,28 @@ div#timerDisplay{
   height: 114px;
   margin: 0 auto;
 }
+
+#questions-container{
+  width: 70%;
+  margin: 0px auto;
+  text-align: center;
+}
+
+#questions-container>div{
+  margin: 10px;
+  padding: 10px;
+}
+
+.question{
+  color: #fff;
+  font-size: 2em;
+}
+
+.options-container>div{
+  color: #fff;
+  width: 300px;
+  background-color:rgba(255,255,255,0.15);
+  margin: 10px auto;
+  padding: 10px;
+  cursor: pointer;
+}
