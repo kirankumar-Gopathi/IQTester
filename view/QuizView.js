@@ -1,12 +1,5 @@
-App.QuizView = Ember.CollectionView.extend({
+App.QuizView = Ember.View.extend({
   elementId:'questions-container',
-  contentBinding:'App.QuizController.content',
-  itemViewClass: Ember.ContainerView.extend({
-      isVisibleBinding: 'content.isVisible',
-      childViews:'mediaSetContainer'.w(),
-      mediaSetContainer:Ember.View.extend({
-          contentBinding:'contentView.content',
-          templateName: 'question-view'
-      })
-  })
+  contentBinding:'App.QuizController.currentQuestion',
+  templateName:'question-view'
 });

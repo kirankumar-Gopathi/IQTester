@@ -1,5 +1,8 @@
 App.NextButton = Ember.View.extend({
-	template:Ember.Handlebars.compile('<button>Next</button>'),
+  elementId:'nextBtn',
+  classNames: 'navBtn',
+  tagName: 'button',
+	template:Ember.Handlebars.compile('Next'),
 	click: function(e) {
     App.QuizController.next();
 	}
