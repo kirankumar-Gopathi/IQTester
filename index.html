@@ -22,15 +22,15 @@
 <body>
 
 <script type="text/x-handlebars" data-template-name="question-view">
+  {{view App.ImageView contentBinding="view.content" isVisibleBinding="view.content.isFillIn"}}
   {{#if view.content.isFillIn}}
-  <div><img {{bindAttr src="view.content.imageURL"}} alt="Logo"></div>
-  <p class="questionText">{{view.content.question}}</p>
-  {{view App.FieldView contentBinding="view.content"}}
+    <p class="questionText">{{view.content.question}}</p>
+    {{view App.FieldView contentBinding="view.content"}}
   {{else}}
-  <p class="questionText">{{view.content.question}}</p>
-  {{#collection contentBinding="view.content.options" class="questionOptions" tagName="ul"}}
-  {{view App.RadioView contentBinding="view.content"}}
-  {{/collection}}
+    <p class="questionText">{{view.content.question}}</p>
+    {{#collection contentBinding="view.content.options" class="questionOptions" tagName="ul"}}
+    {{view App.RadioView contentBinding="view.content"}}
+    {{/collection}}
   {{/if}}
 </script>
 
@@ -52,7 +52,7 @@
     <script type="text/x-handlebars">
       <div id="topBar" class="navBar">
         <div class="rowContainer">
-          <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/10</span>
+          <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/{{App.QuizController.content.length}}</span>
           <span id="timerText">{{App.QuizController.timeLeft}}</span>
           <span id="weight">Weight {{App.QuizController.currentQuestion.weight}}</span>
         </div>
@@ -108,5 +108,6 @@
 <script src="view/NextButton.js"></script>
 <script src="view/Quit.js"></script>
 <script src="view/PlayAgainButton.js"></script>
+<script src="view/ImageView.js"></script>
 </body>
 </html>

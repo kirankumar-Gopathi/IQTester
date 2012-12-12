@@ -30,20 +30,15 @@ App.QuizController = Ember.ArrayProxy.create({
   initializeQuiz: function (){
     var questions = json["questions"];
     var questionModelArr = [];
-	App.QuizController.set('randomized', json.randomized);
-    App.QuizController.set('timer', json.time);    
-	App.QuizController.set('score', 0);
-	App.QuizController.set('correctAnswersCount', 0);
+    App.QuizController.set('randomized', json.randomized);
+    App.QuizController.set('timer', json.time);
+    App.QuizController.set('score', 0);
+    App.QuizController.set('correctAnswersCount', 0);
     $("div#startPage").hide().next("div#main-container").show().next("div#resultPage").hide();
-	App.TimerController.initialize(document.getElementById('clockAnimation'));
+    App.TimerController.initialize(document.getElementById('clockAnimation'));
     for (var i = 0, len = questions.length; i < len; i++) {
       var question = App.Question.create();
-      question.set('question', questions[i].question);
-      question.set('options', questions[i].options);
-      question.set('answer', questions[i].answer);
-      question.set('type', questions[i].type);
-      question.set('weight', questions[i].weight);
-      question.set('imageURL', questions[i].imageURL);
+      question.setProperties(questions[i]);
       questionModelArr.push(question);
     }
 
@@ -75,6 +70,6 @@ App.QuizController = Ember.ArrayProxy.create({
   },
   quit:function () {
     App.TimerController.stopTimer();
-	$("div#main-container").hide().next("div#resultPage").show();	
+	  $("div#main-container").hide().next("div#resultPage").show();
   }
 });
