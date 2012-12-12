@@ -18,8 +18,8 @@ App.TimerController = Ember.Controller.create({
           App.QuizController.set('timeLeft', --quizTimer);
         }
         else {
-          clearInterval(App.TimerController.get("updateTimer"));
           App.QuizController.set('timeLeft', "TimeUp!");
+		  App.QuizController.quit();
         }
       }, 1000));
     }

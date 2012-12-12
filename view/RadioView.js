@@ -8,6 +8,5 @@ App.RadioView = Ember.View.extend({
     var userAnswer = this.getPath('contentView.contentView.contentView.content.options').indexOf(this.content);
     this.setPath('contentView.contentView.contentView.content.userAnswer', userAnswer);
 	this.set("selected",true);
-    console.log(this.getPath('contentView.contentView.contentView.content.isAnswerCorrect'));
   }
 });
