@@ -271,8 +271,8 @@ ul.questionOptions li a{
    cursor: pointer;
 }
 
-ul.questionOptions li a:hover{
-   background-color: rgba(255, 255, 255, 0.5);
+ul.questionOptions li a.selected{
+   background: rgba(255, 255, 255, 0.5) url("../images/check_mark.png") no-repeat 10px 8px;
 }
 
 a.navLink{

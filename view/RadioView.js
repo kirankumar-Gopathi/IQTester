@@ -2,19 +2,12 @@ App.RadioView = Ember.View.extend({
   tagName:'a',
   template:Ember.Handlebars.compile('{{view.content}}'),
   classNameBindings:['selected'],
-  selected:function (test) {
-    var isAnswerCorrect = this.getPath('contentView.contentView.contentView.content.isAnswerCorrect');
-    var iconClass = "close";
-    if (isAnswerCorrect) {
-      iconClass = 'open';
-    } else {
-      iconClass = 'close';
-    }
-    return iconClass;
-  }.property('contentView.contentView.contentView.content.isAnswerCorrect'),
+  selected:false,
   click:function (e) {
+    this._parentView._parentView.forEachChildView(function (view) { view._childViews[0].set("selected",false);});
     var userAnswer = this.getPath('contentView.contentView.contentView.content.options').indexOf(this.content);
     this.setPath('contentView.contentView.contentView.content.userAnswer', userAnswer);
+	this.set("selected",true);
     console.log(this.getPath('contentView.contentView.contentView.content.isAnswerCorrect'));
   }
 });

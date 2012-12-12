@@ -40,7 +40,7 @@
     <div class="logo"></div>
     <label for="participantName" class="enterName">Enter your name</label>
     <input type="text" id="participantName"/>
-    <button id="startTestBtn" class="navBtn">Start Game</button>
+	<script type="text/x-handlebars"> {{view App.StartGameButton}} </script>
     <button id="helpBtn" class="navBtn">Help</button>
   </div>
 
@@ -85,7 +85,7 @@
       <p id="correctAnswerCountContainer"><span
         class="correctCountText">{{App.QuizController.correctAnswersCount}}</span>&#47;<span>{{App.QuizController.content.length}}</span>
       </p>
-      <button id="playAgainBtn" class="navBtn">Play Again</button>
+      {{view App.PlayAgainButton}}
       <button id="newGameBtn" class="navBtn">New Game</button>
     </script>
   </div>
@@ -98,10 +98,12 @@
 <script src="js/libs/ember-1.0.pre.min.js"></script>
 <script src="js/app.js"></script>
 <script src="model/Question.js"></script>
+<script src="controller/timerController.js"></script>
 <script src="controller/quizController.js"></script>
 <script src="view/QuizView.js"></script>
 <script src="view/FiledView.js"></script>
 <script src="view/RadioView.js"></script>
+<script src="view/StartGameButton.js"></script>
 <script src="view/Pass.js"></script>
 <script src="view/NextButton.js"></script>
 <script src="view/Quit.js"></script>
