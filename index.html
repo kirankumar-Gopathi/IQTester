@@ -35,22 +35,22 @@
 </script>
 
 <div class="page">
+<script type="text/x-handlebars">
   <!-- start page -->
-  <div id="startPage">
+{{#view App.StartPageView}}
     <div class="logo"></div>
     <label for="participantName" class="enterName">Enter your name</label>
     <input type="text" id="participantName"/>
-	<script type="text/x-handlebars"> {{view App.StartGameButton}} </script>
+	{{view App.StartGameButton}} 
     <button id="helpBtn" class="navBtn">Help</button>
-  </div>
+{{/view}}
 
   <!-- questions page -->
-  <div id="main-container">
-    <div id="timerDisplay">
+{{#view App.QuestionsPageView}}
+  <div id="timerDisplay">
       <canvas id="clockAnimation" width="104" height="114"></canvas>
     </div>
-    <script type="text/x-handlebars">
-      <div id="topBar" class="navBar">
+     <div id="topBar" class="navBar">
         <div class="rowContainer">
           <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/{{App.QuizController.content.length}}</span>
           <span id="timerText">{{App.QuizController.timeLeft}}</span>
@@ -60,20 +60,16 @@
       <div id="questionContainer">
         {{view App.QuizView}}
       </div>
-    </script>
     <div id="bottomNavBar" class="navBar">
-      <script type="text/x-handlebars">
         <span>{{view App.Quit}}</span>
         <span>{{view App.NextButton}}</span>
         <span>{{view App.Pass}}</span>
-      </script>
     </div>
-  </div>
+{{/view}}
 
   <!-- result page -->
-  <div id="resultPage" style="display:none;">
-    <div class="logo"></div>
-    <script type="text/x-handlebars">
+ {{#view App.ResultPageView}}
+     <div class="logo"></div>
       <h3 class="resultsHeading">Results</h3>
 
       <div id="scoreContainer">
@@ -87,8 +83,8 @@
       </p>
       {{view App.PlayAgainButton}}
       <button id="newGameBtn" class="navBtn">New Game</button>
-    </script>
-  </div>
+  {{/view}}
+ </script>
 </div>
 
 <!-- The missing protocol means that it will match the current protocol, either http or https. If running locally, we use the local jQuery. -->
@@ -100,6 +96,9 @@
 <script src="model/Question.js"></script>
 <script src="controller/timerController.js"></script>
 <script src="controller/quizController.js"></script>
+<script src="view/StartPageView.js"></script>
+<script src="view/QuestionsPageView.js"></script>
+<script src="view/ResultPageView.js"></script>
 <script src="view/QuizView.js"></script>
 <script src="view/FiledView.js"></script>
 <script src="view/RadioView.js"></script>

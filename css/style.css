@@ -127,7 +127,6 @@ body{
   width: 100%;
   overflow: hidden;
   position: relative;
-  display:none;
 }
 
 #footer{
@@ -226,7 +225,7 @@ div.navBar{
   display:table;
 }
 
-div.navBar div.rowContainer,div#bottomNavBar>div{
+div.navBar div.rowContainer{
   display: table-row;
   text-align: center;
 }
@@ -235,6 +234,7 @@ div.navBar span{
   display: table-cell;
   vertical-align: middle;
   width: 33%;
+  text-align: center;
 }
 
 div#bottomNavBar span{
