@@ -5,8 +5,7 @@ App.QuizController = Ember.ArrayProxy.create({
   content:[],
   score:0,
   correctAnswersCount:0,
-  time:null,
-  timeLeft:null,
+  timer:null,
   randomized:false,
   currentPage: "startPage",
   currentQuestionIndex:null,
@@ -36,7 +35,8 @@ App.QuizController = Ember.ArrayProxy.create({
     App.QuizController.set('score', 0);
     App.QuizController.set('correctAnswersCount', 0);
 	this.showPage("questionsPage");
-    App.TimerController.initialize(document.getElementById('clockAnimation'));
+    App.TimerController.initialize(this.get('timer'));
+	App.TimerController.startTimer();
     for (var i = 0, len = questions.length; i < len; i++) {
       var question = App.Question.create();
       question.setProperties(questions[i]);
@@ -76,3 +76,4 @@ App.QuizController = Ember.ArrayProxy.create({
     App.QuizController.set("currentPage",page);
   }
 });
+

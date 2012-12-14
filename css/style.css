@@ -173,7 +173,7 @@ button#nextBtn{
   margin: 0 auto;
 }
 
-div#timerDisplay{
+div.timerDisplay{
   background: url("../images/timer_start_modified.png") no-repeat scroll 0 0 transparent;
   width: 104px;
   height: 114px;

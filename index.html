@@ -47,13 +47,13 @@
 
   <!-- questions page -->
 {{#view App.QuestionsPageView}}
-  <div id="timerDisplay">
-      <canvas id="clockAnimation" width="104" height="114"></canvas>
-    </div>
+  {{#view App.TimerView}}
+       {{view TimerCanvasView}}
+  {{/view}}
      <div id="topBar" class="navBar">
         <div class="rowContainer">
           <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/{{App.QuizController.content.length}}</span>
-          <span id="timerText">{{App.QuizController.timeLeft}}</span>
+          <span id="timerText">{{App.TimerController.timer.timeLeft}}</span>
           <span id="weight">Weight {{App.QuizController.currentQuestion.weight}}</span>
         </div>
       </div>
@@ -108,5 +108,7 @@
 <script src="view/Quit.js"></script>
 <script src="view/PlayAgainButton.js"></script>
 <script src="view/ImageView.js"></script>
+<script src="view/TimerView.js"></script>
+<script src="model/Timer.js"></script>
 </body>
 </html>
