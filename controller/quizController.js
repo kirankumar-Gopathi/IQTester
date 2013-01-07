@@ -1,7 +1,7 @@
 /**************************
  * Quiz Controller
  **************************/
-App.QuizController = Ember.ArrayProxy.create({
+App.QuizController = Ember.ArrayController.create({
   content:[],
   score:0,
   correctAnswersCount:0,
@@ -9,6 +9,8 @@ App.QuizController = Ember.ArrayProxy.create({
   randomized:false,
   currentPage: "startPage",
   currentQuestionIndex:null,
+  assessmentArray:[],
+  userAnswerArray:[],
   currentQuestion:function () {
     return this.get('content')[this.get('currentQuestionIndex')];
   }.property('currentQuestionIndex'),
@@ -16,36 +18,40 @@ App.QuizController = Ember.ArrayProxy.create({
     return this.get('currentQuestionIndex') + 1;
   }.property('currentQuestionIndex'),
   shuffleContent:function () {
-    var questions = this.get('content');
-    var i = questions.length;
+    var questions = this.get('content'),
+	    answers = this.get('assessmentArray'),
+        i = questions.length;
     if (i == 0) return false;
     while (--i) {
-      var j = Math.floor(Math.random() * ( i + 1 ));
-      var tempI = questions[i];
-      var tempJ = questions[j];
+      var j = Math.floor(Math.random() * ( i + 1 )),
+          tempI = questions[i], tempIAnswer = answers[i],
+          tempJ = questions[j], tempJAnswer = answers[j];
       questions[i] = tempJ;
       questions[j] = tempI;
+	  answers[i] = tempJAnswer;
+	  answers[j] = tempIAnswer;
     }
   },
   initializeQuiz: function (){
     var questions = json["questions"];
-    var questionModelArr = [];
-    App.QuizController.set('randomized', json.randomized);
-    App.QuizController.set('timer', json.time);
-    App.QuizController.set('score', 0);
-    App.QuizController.set('correctAnswersCount', 0);
+    var questionModelArr = [], assessmentArray = [];
+	this.setProperties({'randomized': json.randomized, 'timer': json.time, 'score': 0, 'correctAnswersCount': 0, 'userAnswerArray': [], 'assessmentArray': []});
 	this.showPage("questionsPage");
     App.TimerController.initialize(this.get('timer'));
 	App.TimerController.startTimer();
     for (var i = 0, len = questions.length; i < len; i++) {
-      var question = App.Question.create();
-      question.setProperties(questions[i]);
+      var question = App.Question.create(),
+	      answer = App.Answer.create();
+      question.setProperties({'question':questions[i].question, 'options':questions[i].options, 'weight':questions[i].weight, 'type':questions[i].type, 'imageURL':questions[i].imageURL});
+	  answer.setProperties({'type':questions[i].type, 'answer':questions[i].answer});
       questionModelArr.push(question);
+	  assessmentArray.push(answer);
     }
 
     if (questionModelArr.length > 1) {
       var consolidatedRecords = [];
       App.QuizController.set('[]', questionModelArr);
+	  App.QuizController.set('assessmentArray', assessmentArray);
       if (App.QuizController.get('randomized')) {
         App.QuizController.shuffleContent();
       }
@@ -54,7 +60,7 @@ App.QuizController = Ember.ArrayProxy.create({
    },
   next:function () {
     var currentQuestion = this.get('currentQuestion');
-    if (currentQuestion.get('isAnswerCorrect')) {
+    if (this.evaluateQuestion(currentQuestion)) {
       this.set('correctAnswersCount', this.get('correctAnswersCount') + 1);
       this.set('score', this.get('score') + currentQuestion.get('weight'));
     }
@@ -74,6 +80,12 @@ App.QuizController = Ember.ArrayProxy.create({
   },
   showPage: function(page){
     App.QuizController.set("currentPage",page);
+  },
+  evaluateQuestion: function(question) {
+	var currentQuestionIndex = this.get('currentQuestionIndex'),
+	    answer = this.get('assessmentArray')[currentQuestionIndex].answer,
+        userAnswer = this.get('userAnswerArray')[currentQuestionIndex];
+    return (answer && userAnswer && isNaN(answer)) ? Ember.isEqual(userAnswer.toLowerCase(), answer.toLowerCase()) : Ember.isEqual(userAnswer, answer);
   }
 });
 
