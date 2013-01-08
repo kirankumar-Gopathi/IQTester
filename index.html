@@ -22,77 +22,81 @@
 <body>
 
 <script type="text/x-handlebars" data-template-name="question-view">
-  {{view App.ImageView contentBinding="view.content" isVisibleBinding="view.content.isFillIn"}}
-  {{#if view.content.isFillIn}}
-    <p class="questionText">{{view.content.question}}</p>
-    {{view App.FieldView contentBinding="view.content"}}
-  {{else}}
-    <p class="questionText">{{view.content.question}}</p>
-    {{#collection contentBinding="view.content.options" class="questionOptions" tagName="ul"}}
-    {{view App.RadioView contentBinding="view.content"}}
-    {{/collection}}
-  {{/if}}
+  <div id="topBar" class="navBar">
+     <div class="rowContainer">
+       <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/{{App.QuizController.content.length}}</span>
+       <span id="timerText">{{App.TimerController.timer.timeLeft}}</span>
+       <span id="weight">Weight {{App.QuizController.currentQuestion.weight}}</span>
+     </div>
+   </div>
+  <div id="questionContainer">
+    {{#if view.content.isFillIn}}
+      <img {{bindAttr src="App.QuizController.currentQuestion.imageURL"}}/>
+      <p class="questionText">{{view.content.question}}</p>
+      <input type="text" {{action "fillInKeyUp" on="keyUp"}}/>
+    {{else}}
+      <p class="questionText">{{view.content.question}}</p>
+      {{#collection contentBinding="view.content.options" class="questionOptions" tagName="ul"}}
+      {{view App.RadioView contentBinding="view.content"}}
+      {{/collection}}
+    {{/if}}
+   </div>
+   <div id="bottomNavBar" class="navBar">
+      <span><a class="navLink leftNav" {{action "quit" on="click"}}>Quit</a></span>
+      <span>{{view App.NextButton}}</span>
+      <span><a class="navLink rightNav" {{action "pass" on="click"}}>Pass</a></span>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="results-view">
+  <div class="logo"></div>
+   <h3 class="resultsHeading">Results</h3>
+
+   <div id="scoreContainer">
+     <h4>Congratulations!</h4>
+  <span class="scoreText">
+    Your Score is <div>{{App.QuizController.score}}</div>
+  </span>
+   </div>
+   <p id="correctAnswerCountContainer"><span
+     class="correctCountText">{{App.QuizController.correctAnswersCount}}</span>&#47;<span>{{App.QuizController.content.length}}</span>
+   </p>
+   <button id="playAgainBtn" class="navBtn" {{action "playAgain" on="click"}}>Play Again</button>
+   <button id="newGameBtn" class="navBtn" {{action "newGame" on="click"}}>New Game</button>
+</script>
+
+<script type="text/x-handlebars" data-template-name="home-view">
+  <div class="logo"></div>
+  <label for="participantName" class="enterName">Enter your name</label>
+  <input type="text" id="participantName"/>
+  <button id="startTestBtn" class="navBtn" {{action "startGame" on="click"}}>Start</button>
+  <button id="helpBtn" class="navBtn">Help</button>
 </script>
 
 <div class="page">
 <script type="text/x-handlebars">
   <!-- start page -->
-{{#view App.StartPageView}}
-    <div class="logo"></div>
-    <label for="participantName" class="enterName">Enter your name</label>
-    <input type="text" id="participantName"/>
-	{{view App.StartGameButton}} 
-    <button id="helpBtn" class="navBtn">Help</button>
-{{/view}}
+{{view App.StartPageView}}
 
   <!-- questions page -->
 {{#view App.QuestionsPageView}}
   {{#view App.TimerView}}
        {{view TimerCanvasView}}
   {{/view}}
-     <div id="topBar" class="navBar">
-        <div class="rowContainer">
-          <span id="questionNo">Question {{App.QuizController.currentQuestionIndexDisplay}}/{{App.QuizController.content.length}}</span>
-          <span id="timerText">{{App.TimerController.timer.timeLeft}}</span>
-          <span id="weight">Weight {{App.QuizController.currentQuestion.weight}}</span>
-        </div>
-      </div>
-      <div id="questionContainer">
-        {{view App.QuizView}}
-      </div>
-    <div id="bottomNavBar" class="navBar">
-        <span>{{view App.Quit}}</span>
-        <span>{{view App.NextButton}}</span>
-        <span>{{view App.Pass}}</span>
-    </div>
+  {{view App.QuizView}}
 {{/view}}
 
   <!-- result page -->
- {{#view App.ResultPageView}}
-     <div class="logo"></div>
-      <h3 class="resultsHeading">Results</h3>
-
-      <div id="scoreContainer">
-        <h4>Congratulations!</h4>
-  	  <span class="scoreText">
-  	    Your Score is <div>{{App.QuizController.score}}</div>
-  	  </span>
-      </div>
-      <p id="correctAnswerCountContainer"><span
-        class="correctCountText">{{App.QuizController.correctAnswersCount}}</span>&#47;<span>{{App.QuizController.content.length}}</span>
-      </p>
-      {{view App.PlayAgainButton}}
-      <button id="newGameBtn" class="navBtn">New Game</button>
-  {{/view}}
+ {{view App.ResultPageView}}
  </script>
 </div>
 
 <!-- The missing protocol means that it will match the current protocol, either http or https. If running locally, we use the local jQuery. -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
-<script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
-<script src="js/libs/ember-1.0.pre.min.js"></script>
-<script src="js/app.js"></script>
+<script>window.jQuery || document.write('<script src="libs/jquery-1.7.2.min.js"><\/script>')</script>
+<script src="libs/handlebars-1.0.0.beta.6.js"></script>
+<script src="libs/ember-1.0.pre.min.js"></script>
+<script src="app/app.js"></script>
 <script src="model/Question.js"></script>
 <script src="model/Answer.js"></script>
 <script src="controller/timerController.js"></script>
@@ -101,12 +105,8 @@
 <script src="view/QuestionsPageView.js"></script>
 <script src="view/ResultPageView.js"></script>
 <script src="view/QuizView.js"></script>
-<script src="view/FiledView.js"></script>
 <script src="view/RadioView.js"></script>
-<script src="view/StartGameButton.js"></script>
-<script src="view/Pass.js"></script>
 <script src="view/NextButton.js"></script>
-<script src="view/Quit.js"></script>
 <script src="view/PlayAgainButton.js"></script>
 <script src="view/ImageView.js"></script>
 <script src="view/TimerView.js"></script>

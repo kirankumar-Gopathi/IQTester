@@ -6,7 +6,7 @@ App.Timer = Ember.Object.extend({
   timeLeft: null,
   timerArcEndAngle: function() {
     return ((360*(this.totalTime - this.timeLeft))/this.totalTime); 
-  },
+  }
 });
   
   

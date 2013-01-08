@@ -9,5 +9,5 @@ App.Question = Ember.Object.extend({
   imageURL:null,
   isFillIn:function () {
     return Ember.isEqual(this.get('type'), "fillin");
-  }.property('type'),
+  }.property('type')
 });
